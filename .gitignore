@@ -143,3 +143,4 @@ config.json
 .vsls.json
 .vscode
 muribo
+deploy.sh
