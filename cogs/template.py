@@ -1,9 +1,6 @@
 from discord.ext import commands
 
-from utils import load_json, load_locale
-
-config = load_json("config.json")
-_ = load_locale("project", "locales", [config["language"]])
+from utils.utils import config, _
 
 
 class Template(commands.Cog, name="template"):
