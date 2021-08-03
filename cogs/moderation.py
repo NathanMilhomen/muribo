@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from utils import _
+from utils.utils import _
 
 
 class moderation(commands.Cog, name="moderation"):

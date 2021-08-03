@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from utils import config, _
+from utils.utils import config, _
 
 
 class Help(commands.Cog, name="help"):

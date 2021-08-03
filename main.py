@@ -7,8 +7,10 @@ import platform
 import random
 import sys
 
-from utils import config, _, load_json
+from decouple import config as env
 
+from utils.utils import config, _, load_json
+from utils import db
 
 intents = discord.Intents.default()
 
@@ -49,8 +51,9 @@ async def on_message(message):
     if message.author == bot.user or message.author.bot:
         return
 
-    blacklist = load_json("blacklist.json")
-    if message.author.id in blacklist["ids"]:
+    blacklist = db.execute("SELECT id FROM blacklist;")
+
+    if blacklist and message.author.id in blacklist:
         return
     await bot.process_commands(message)
 
@@ -100,4 +103,4 @@ async def on_command_error(context, error):
     raise error
 
 
-bot.run(config["token"])
+bot.run(env("token"))
