@@ -103,4 +103,4 @@ async def on_command_error(context, error):
     raise error
 
 
-bot.run(env("token"))
+bot.run(env("TOKEN"))

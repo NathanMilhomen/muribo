@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, text
 from decouple import config
 
 
-url = config("db_url")
+url = config("DB_URL")
 # Echo loga as queries
 _engine = create_engine(url, echo=True)
 
