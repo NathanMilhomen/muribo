@@ -14,7 +14,7 @@ from utils import db
 
 intents = discord.Intents.default()
 
-bot = Bot(command_prefix=config["bot_prefix"], intents=intents)
+bot = Bot(command_prefix=env("PREFIX"), intents=intents)
 
 
 @bot.event
@@ -63,9 +63,14 @@ async def on_command_completion(ctx):
     fullCommandName = ctx.command.qualified_name
     split = fullCommandName.split(" ")
     executedCommand = str(split[0])
+    if ctx.guild != None:
+        guild_str = "in {ctx.guild.name} (ID: {ctx.message.guild.id}) "
+    else:
+        guild_str = "in DM"
+
     print(
         _(
-            f"Executed {executedCommand} command in {ctx.guild.name} (ID: {ctx.message.guild.id}) by {ctx.message.author} (ID: {ctx.message.author.id})"
+            f"Executed {executedCommand} command {guild_str} by {ctx.message.author} (ID: {ctx.message.author.id})"
         )
     )
 
@@ -100,7 +105,6 @@ async def on_command_error(context, error):
             color=0xE02B2B,
         )
         await context.send(embed=embed)
-    raise error
 
 
-bot.run(env("token"))
+bot.run(env("TOKEN"))

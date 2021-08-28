@@ -1,5 +1,4 @@
 {
-    "bot_prefix": ".",
     "locales_domain": "base",
     "locales_path": "locales",
     "locales_languages": [
