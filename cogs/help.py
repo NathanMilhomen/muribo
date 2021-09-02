@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 
 from utils.utils import config, _
+from decouple import config as env
 
 
 class Help(commands.Cog, name="help"):
@@ -13,7 +14,7 @@ class Help(commands.Cog, name="help"):
         """
         List all commands from every Cog the bot has loaded.
         """
-        prefix = config["bot_prefix"]
+        prefix = env("PREFIX")
 
         if not isinstance(prefix, str):
             prefix = prefix[0]

@@ -11,9 +11,11 @@ class moderation(commands.Cog, name="moderation"):
     @commands.command(name="kick", pass_context=True)
     @commands.has_permissions(kick_members=True)
     async def kick(self, context, member: discord.Member, *, reason=_("Not specified")):
-        """
+        _(
+            """
         Kick a user out of the server.
         """
+        )
         if member.guild_permissions.administrator:
             embed = discord.Embed(
                 title=_("Error!"),
@@ -27,7 +29,7 @@ class moderation(commands.Cog, name="moderation"):
                 embed = discord.Embed(
                     title=_("User Kicked!"),
                     description=_(
-                        f"**{member}** was kicked by **{context.message.author}**!"
+                        f"**{member.nick}** was kicked by **{context.message.author.nick}**!"
                     ),
                     color=0x42F56C,
                 )
@@ -36,7 +38,7 @@ class moderation(commands.Cog, name="moderation"):
                 try:
                     await member.send(
                         _(
-                            f"You were kicked by **{context.message.author}**!\nReason: {reason}"
+                            f"You were kicked by **{context.message.author.nick}**!\nReason: {reason}"
                         )
                     )
                 except:
@@ -52,18 +54,19 @@ class moderation(commands.Cog, name="moderation"):
                 await context.message.channel.send(embed=embed)
 
     @commands.command(name="nick")
-    @commands.has_permissions(manage_nicknames=True)
     async def nick(self, context, member: discord.Member, *, nickname=None):
-        """
+        _(
+            """
         Change the nickname of a user on a server.
         """
+        )
         try:
             await member.edit(nick=nickname)
             embed = discord.Embed(
                 title=_("Changed Nickname!"),
-                description=_("**{member}'s** new nickname is **{nickname}**!").format(
-                    member=member, nickname=nickname
-                ),
+                description=_(
+                    "**{member.nick}'s** new nickname is **{nickname}**!"
+                ).format(member=member, nickname=nickname),
                 color=0x42F56C,
             )
             await context.send(embed=embed)
@@ -80,9 +83,11 @@ class moderation(commands.Cog, name="moderation"):
     @commands.command(name="ban")
     @commands.has_permissions(ban_members=True)
     async def ban(self, context, member: discord.Member, *, reason="Not specified"):
-        """
+        _(
+            """
         Bans a user from the server.
         """
+        )
         try:
             if member.guild_permissions.administrator:
                 embed = discord.Embed(
@@ -96,7 +101,7 @@ class moderation(commands.Cog, name="moderation"):
                 embed = discord.Embed(
                     title=_("User Banned!"),
                     description=_(
-                        f"**{member}** was banned by **{context.message.author}**!"
+                        f"**{member.nick}** was banned by **{context.message.author.nick}**!"
                     ),
                     color=0x42F56C,
                 )
@@ -104,7 +109,7 @@ class moderation(commands.Cog, name="moderation"):
                 await context.send(embed=embed)
                 await member.send(
                     _(
-                        f"You were banned by **{context.message.author}**!\nReason: {reason}"
+                        f"You were banned by **{context.message.author.nick}**!\nReason: {reason}"
                     )
                 )
         except:
@@ -118,21 +123,26 @@ class moderation(commands.Cog, name="moderation"):
             await context.send(embed=embed)
 
     @commands.command(name="warn")
-    @commands.has_permissions(manage_messages=True)
     async def warn(self, context, member: discord.Member, *, reason=_("Not specified")):
-        """
+        _(
+            """
         Warns a user in his private messages.
         """
+        )
         embed = discord.Embed(
             title=_("User Warned!"),
-            description=_(f"**{member}** was warned by **{context.message.author}**!"),
+            description=_(
+                f"**{member.nick}** was warned by **{context.message.author.nick}**!"
+            ),
             color=0x42F56C,
         )
         embed.add_field(name=_("Reason:"), value=reason)
         await context.send(embed=embed)
         try:
             await member.send(
-                _(f"You were warned by **{context.message.author}**!\nReason: {reason}")
+                _(
+                    f"You were warned by **{context.message.author.nick}**!\nReason: {reason}"
+                )
             )
         except:
             pass
@@ -140,9 +150,11 @@ class moderation(commands.Cog, name="moderation"):
     @commands.command(name="purge")
     @commands.has_permissions(manage_messages=True, manage_channels=True)
     async def purge(self, context, amount):
-        """
+        _(
+            """
         Delete a number of messages.
         """
+        )
         try:
             amount = int(amount)
         except:
@@ -153,7 +165,7 @@ class moderation(commands.Cog, name="moderation"):
             )
             await context.send(embed=embed)
             return
-        if amount < 1:
+        if amount < 1 or amount > 1000:
             embed = discord.Embed(
                 title=_("Error!"),
                 description=_(f"`{amount}` is not a valid number."),
@@ -165,7 +177,7 @@ class moderation(commands.Cog, name="moderation"):
         embed = discord.Embed(
             title=_("Chat Cleared!"),
             description=_(
-                f"**{context.message.author}** cleared **{len(purged_messages)}** messages!"
+                f"**{context.message.author.nick}** cleared **{len(purged_messages)}** messages!"
             ),
             color=0x42F56C,
         )
