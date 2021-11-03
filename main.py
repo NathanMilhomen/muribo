@@ -4,8 +4,6 @@ from discord.ext.commands import Bot
 
 import os
 import platform
-import random
-import sys
 
 from decouple import config as env
 
@@ -77,6 +75,9 @@ async def on_command_completion(ctx):
 
 @bot.event
 async def on_command_error(context, error):
+    if env("ENVIRONMENT") == "DEV":
+        raise error
+
     if isinstance(error, commands.CommandOnCooldown):
         minutes, seconds = divmod(error.retry_after, 60)
         hours, minutes = divmod(minutes, 60)

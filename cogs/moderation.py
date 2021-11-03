@@ -4,7 +4,7 @@ from discord.ext import commands
 from utils.utils import _
 
 
-class moderation(commands.Cog, name="moderation"):
+class Moderation(commands.Cog, name="moderation"):
     def __init__(self, bot):
         self.bot = bot
 
@@ -185,4 +185,4 @@ class moderation(commands.Cog, name="moderation"):
 
 
 def setup(bot):
-    bot.add_cog(moderation(bot))
+    bot.add_cog(Moderation(bot))

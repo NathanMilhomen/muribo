@@ -1,6 +1,0 @@
-sudo yum install python-pip3
-sudo yum install git
-
-git clone https://github.com/NathanMilhomen/muribo.git
-cd muribo
-python3 main.py
